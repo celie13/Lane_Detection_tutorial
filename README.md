@@ -47,7 +47,6 @@ Source $s$ and destination $d$ (the extra dimension is to be able to perform tra
 
 
 $$
-
 \begin{bmatrix}
 x_1\\
 y_1\\
@@ -60,14 +59,6 @@ x_2\\
 y_2\\
 1
 \end{bmatrix}
-,
-A =
-\begin{bmatrix}
-    a_{00} & a_{01} & a_{02} \\
-    a_{10} & a_{11} & a_{12} \\
-    a_{20} & a_{21} & a_{22}
-\end{bmatrix}
-
 $$
 
 <figure>
