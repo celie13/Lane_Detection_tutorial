@@ -7,7 +7,7 @@ guideline for your future algorithm.
 ## Image Gray scale
 Most of the work involving lane detection doesn't need the colour information as there is a clear contrast between the line and the road.
 Therefore we can apply a gray scale transform: 
-$$ G_xy = {(R_{xy}+G_{xy}+B_{xy}) \over 3} $$
+$$G_xy = {(R_{xy}+G_{xy}+B_{xy}) \over 3}$$
 Where (x,y) represents the pixel location.
 
 <figure>
