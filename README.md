@@ -66,7 +66,6 @@ A =
     a_{20} & a_{21} & a_{22}
 \end{bmatrix}
 $$
-
 <figure>
   <img
   src="ReadMe/warp.png"
