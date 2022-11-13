@@ -47,15 +47,13 @@ Source $s$ and destination $d$ (the extra dimension is to be able to perform tra
 
 
 $$
-\begin{bmatrix}
-x_1\\
+\begin{bmatrix}x_1\\
 y_1\\
 1
 \end{bmatrix}
  =
  A
-\begin{bmatrix}
-x_2\\
+\begin{bmatrix}x_2\\
 y_2\\
 1
 \end{bmatrix}
