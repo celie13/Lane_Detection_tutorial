@@ -12,20 +12,20 @@ grayRoad = im2double(rgb2gray(road));
 C = []
 if mask 
     C = imask(grayRoad)
-    grayRoad = grayRoad*C
+    grayRoad = grayRoad.*C;
 end 
 imshow(grayRoad)
 w = waitforbuttonpress;
 close
 %%% if user selects iwarp as an option then warp the image'
 H = []
-roadBW = [];
+roadBW = grayRoad;
 if warp == 1
     H = iwarp(grayRoad)
     [Iwarp,ref] = imwarp(grayRoad,H,'OutputView',imref2d(size(grayRoad)));
-    roadBW = imbinarize(Iwarp,0.7);
+    %roadBW = imbinarize(Iwarp,0.7);
 else
-    roadBW = imbinarize(grayRoad,0.7);
+   roadBW = imbinarize(grayRoad,0.7);
 end
 imshow(roadBW)
 w = waitforbuttonpress;
@@ -33,16 +33,16 @@ close
 
 
 %%% Find the lanes using the hough transform 
-
+houghPipeline(roadBW,road)
 end
 
 
 %%%%%%%%%%%%%%%%%%%%% Function finds and draw the lines %%%%%%%%%%%%%%%%%%%
-function houghPipeline(img)
-    [H,theta,rho] = houghparam(img)
+function houghPipeline(img,og_img)
+    [H,theta,rho,P] = houghparam(img)
     %% Display the lines
-    lines = houghlines(roadBW,theta,rho,P,'FillGap',5,'MinLength',40);
-    figure, imshow(roadBW), hold on
+    lines = houghlines(img,theta,rho,P,'FillGap',5,'MinLength',5);
+    figure, imshow(og_img), hold on
     max_len = 0;
     for k = 1:length(lines)
        xy = [lines(k).point1; lines(k).point2];
@@ -62,9 +62,9 @@ function houghPipeline(img)
     % highlight the longest line segment
     plot(xy_long(:,1),xy_long(:,2),'LineWidth',2,'Color','red');
 end 
-%%%%%%%%%%%%%%%%%%%%%% function returns hough param %%%%%%%%%%%%%%%%%%%%%%%
-function[H,theta,rho] =  houghparam()
-    [H,theta,rho] = hough(edge(roadBW,'sobel'));
+%%%%%%%%%%%%%%%%%%%%% function returns hough param %%%%%%%%%%%%%%%%%%%%%%%%
+function[H,theta,rho,P] =  houghparam(img)
+    [H,theta,rho] = hough(edge(img,'sobel'));
     figure
     imshow(imadjust(rescale(H)),[],...
            'XData',theta,...
@@ -89,23 +89,27 @@ function C = imask(img)
     mask = drawpolygon;
     C = createMask(mask);
     close
-    imshow(ma)
 end 
+
+%%%%%%%%%%%%%%%%%%%% funcion returns crop on roi %%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 
 %%%%%%%%%%%%%%%%%%%% function returns H matrix for warping %%%%%%%%%%%%%%%%
 function H = iwarp(img)
     figure
     imshow(img)
     sow = drawpolygon; %get orignal transform point
-    dow = drawrectangle; %define the new points
+    dow = drawpolygon; %define the new points
     origin = sow.Position;
     mapped = dow.Position; % these are not coordinates but the attributes of a rectange
     %if using drawrectange on region of interest
-    xy = mapped(1:2);
-    mvx = [mapped(3),0];
-    mvy = [0,mapped(4)];
-    mvxy = mapped(3:4);
-    map_coor = [xy;mvx+xy;mvxy+xy;mvy+xy];
+%     xy = mapped(1:2);
+%     mvx = [mapped(3),0];
+%     mvy = [0,mapped(4)];
+%     mvxy = mapped(3:4);
+%     map_coor = [xy;mvx+xy;mvxy+xy;mvy+xy];
+    map_coor = mapped;
     H = fitgeotrans(origin,map_coor, 'projective'); 
     close
 end

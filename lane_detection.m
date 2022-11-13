@@ -1,4 +1,5 @@
 function lane_detection(img_name,warp,mask)
+close all
 %%% open image file
 road = imread(img_name); % "/" might not work on windows due to dir strims
 figure
@@ -12,37 +13,53 @@ grayRoad = im2double(rgb2gray(road));
 C = []
 if mask 
     C = imask(grayRoad)
-    grayRoad = grayRoad.*C
+    grayRoad = grayRoad.*C;
 end 
 imshow(grayRoad)
 w = waitforbuttonpress;
 close
 %%% if user selects iwarp as an option then warp the image'
 H = []
-roadBW = [];
+roadBW = grayRoad;
 if warp == 1
     H = iwarp(grayRoad)
     [Iwarp,ref] = imwarp(grayRoad,H,'OutputView',imref2d(size(grayRoad)));
-    %%roadBW = imbinarize(Iwarp,0.7);
+    %roadBW = imbinarize(Iwarp,0.7);
 else
-    %%roadBW = imbinarize(grayRoad,0.7);
+   roadBW = imbinarize(grayRoad,0.7);
 end
-imshow(Iwarp)
+imshow(roadBW)
 w = waitforbuttonpress;
 close
 
 
 %%% Find the lanes using the hough transform 
-
+houghPipeline(roadBW,road)
 end
 
 
 %%%%%%%%%%%%%%%%%%%%% Function finds and draw the lines %%%%%%%%%%%%%%%%%%%
-function houghPipeline(img)
-    [H,theta,rho] = houghparam(img)
-    %% Display the lines
-    lines = houghlines(roadBW,theta,rho,P,'FillGap',5,'MinLength',40);
-    figure, imshow(roadBW), hold on
+function houghPipeline(img,og_img)
+%%% find lines
+    [H,theta,rho] = hough(edge(img,'canny'));
+    figure
+    imshow(imadjust(rescale(H)),[],...
+           'XData',theta,...
+           'YData',rho,...
+           'InitialMagnification','fit');
+    xlabel('\theta (degrees)')
+    ylabel('\rho')
+    axis on
+    axis normal 
+    hold on
+    colormap(gca,hot)
+    P = houghpeaks(H,20,'threshold',ceil(0.3*max(H(:))));
+    x = theta(P(:,2));
+    y = rho(P(:,1));
+    plot(x,y,'s','color','black');
+    %%% Display the lines
+    lines = houghlines(img,theta,rho,P,'FillGap',30,'MinLength',5);
+    figure, imshow(og_img), hold on
     max_len = 0;
     for k = 1:length(lines)
        xy = [lines(k).point1; lines(k).point2];
@@ -62,25 +79,6 @@ function houghPipeline(img)
     % highlight the longest line segment
     plot(xy_long(:,1),xy_long(:,2),'LineWidth',2,'Color','red');
 end 
-%%%%%%%%%%%%%%%%%%%%% function returns hough param %%%%%%%%%%%%%%%%%%%%%%%%
-function[H,theta,rho] =  houghparam()
-    [H,theta,rho] = hough(edge(roadBW,'sobel'));
-    figure
-    imshow(imadjust(rescale(H)),[],...
-           'XData',theta,...
-           'YData',rho,...
-           'InitialMagnification','fit');
-    xlabel('\theta (degrees)')
-    ylabel('\rho')
-    axis on
-    axis normal 
-    hold on
-    colormap(gca,hot)
-    P = houghpeaks(H,50,'threshold',ceil(0.3*max(H(:))));
-    x = theta(P(:,2));
-    y = rho(P(:,1));
-    plot(x,y,'s','color','black');
-end 
 
 %%%%%%%%%%%%%%%%%%%% function returns mask roi %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function C = imask(img)
@@ -91,7 +89,6 @@ function C = imask(img)
     close
 end 
 
-%%%%%%%%%%%%%%%%%%%% funcion returns crop on roi %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 

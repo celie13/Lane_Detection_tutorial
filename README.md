@@ -87,3 +87,9 @@ With $\rho$ representing the distance of shortest line spanning from the origin 
 </p>
 <figurecaption> HoughSpace </figurecaption>
 </figure>
+
+On our original image the resulting output is the following:
+<figure>
+  <img src="ReadMe/lines.png"  />
+<figurecaption> HoughSpace </figurecaption>
+</figure>
