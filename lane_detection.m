@@ -23,11 +23,11 @@ roadBW = [];
 if warp == 1
     H = iwarp(grayRoad)
     [Iwarp,ref] = imwarp(grayRoad,H,'OutputView',imref2d(size(grayRoad)));
-    roadBW = imbinarize(Iwarp,0.7);
+    %%roadBW = imbinarize(Iwarp,0.7);
 else
-    roadBW = imbinarize(grayRoad,0.7);
+    %%roadBW = imbinarize(grayRoad,0.7);
 end
-imshow(roadBW)
+imshow(Iwarp)
 w = waitforbuttonpress;
 close
 
