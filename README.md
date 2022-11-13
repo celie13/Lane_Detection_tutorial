@@ -34,5 +34,6 @@ y_{2}\\
 1 
 \end{bmatrix}
 $$
+
 Source $s$ and destination $d$ (the extra dimension is to be able to perform translation and rotation using Matrix Multiplication)
 
