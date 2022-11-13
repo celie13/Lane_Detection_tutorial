@@ -91,8 +91,8 @@ With $\rho$ representing the distance of shortest line spanning from the origin 
 
 <figure>
 <p float="left">
-  <img src="ReadMe/line.png" width="250" />
-  <img src="ReadMe/houghspace.png" width="250" /> 
+  <img src="ReadMe/line.png" width="305" />
+  <img src="ReadMe/houghspace.png" width="305" /> 
 </p>
 <figurecaption> HoughSpace </figurecaption>
 </figure>
