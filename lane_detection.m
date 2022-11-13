@@ -12,7 +12,7 @@ grayRoad = im2double(rgb2gray(road));
 C = []
 if mask 
     C = imask(grayRoad)
-    grayRoad = grayRoad*C
+    grayRoad = grayRoad.*C
 end 
 imshow(grayRoad)
 w = waitforbuttonpress;
@@ -100,15 +100,16 @@ function H = iwarp(img)
     figure
     imshow(img)
     sow = drawpolygon; %get orignal transform point
-    dow = drawrectangle; %define the new points
+    dow = drawpolygon; %define the new points
     origin = sow.Position;
     mapped = dow.Position; % these are not coordinates but the attributes of a rectange
     %if using drawrectange on region of interest
-    xy = mapped(1:2);
-    mvx = [mapped(3),0];
-    mvy = [0,mapped(4)];
-    mvxy = mapped(3:4);
-    map_coor = [xy;mvx+xy;mvxy+xy;mvy+xy];
+%     xy = mapped(1:2);
+%     mvx = [mapped(3),0];
+%     mvy = [0,mapped(4)];
+%     mvxy = mapped(3:4);
+%     map_coor = [xy;mvx+xy;mvxy+xy;mvy+xy];
+    map_coor = mapped;
     H = fitgeotrans(origin,map_coor, 'projective'); 
     close
 end
