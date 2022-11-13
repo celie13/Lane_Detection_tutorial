@@ -30,7 +30,6 @@ y_{1}\\
 \end{bmatrix}, d = \begin{bmatrix}x_{2}\\
 y_{2}\\
 1 
-\end{bmatrix}
-$$
+\end{bmatrix}$$
 Source $s$ and destination $d$ (the extra dimension is to be able to perform translation and rotation using Matrix Multiplication)
 
