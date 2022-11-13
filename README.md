@@ -29,6 +29,7 @@ In the case of our road, the main region is the bottom half of the image as it c
 Matlab  will return  
 
 ## Birds Eye View or Homomorphic Mapping
+
 Depending on your application it might be easier to visualize the road as if you were looking from above. <br>
 Given:
 
@@ -77,6 +78,7 @@ You can see that the lines are almost parallel and this is almost like having a 
 This implementation is a bit crude and  you can see it is not perfect. Mathwords has a tutorial that you can find [here](https://uk.mathworks.com/help/driving/ref/birdseyeview.html). The results are surprinsingly good but that requires knowledge of some of the camera attributes (such as focal length, positining, etc.). 
 
 ## Hough Transform
+
 In a Cartesian plane, lines are represented by the formula $y = ax + b$ with $a$ representing the slope and $b$ the $y-axis$ intersection. As such, lines can be defined as tuple containing both of these parameters: $(a,b)$. However, for vertical lines, in the form of $x = c$ with $c \in \mathbb{R}$, such notation is not applicable, as the slope would be infinite (undefined). <br>
 \par An alternative way of representing lines is defining them in terms of $\rho$ and $\theta$ as seen 
 
