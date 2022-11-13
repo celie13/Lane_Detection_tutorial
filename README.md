@@ -12,8 +12,8 @@ Where (x,y) represents the pixel location.
 
 <figure>
   <img
-  src="ReadMe/untitled.png"
-  alt="The beautiful MDN logo.">
+  src="ReadMe/gray.png"
+  alt="Gray scale road.">
   <figcaption>Gray Scale image</figcaption>
 </figure>
 
