@@ -44,7 +44,7 @@ y_{2}\\
 $$
 
 Source $s$ and destination $d$ (the extra dimension is to be able to perform translation and rotation using Matrix Multiplication)
-
+###
 $$
 \begin{bmatrix}
 x_1\\
@@ -66,6 +66,7 @@ A =
     a_{20} & a_{21} & a_{22}
 \end{bmatrix}
 $$
+
 <figure>
   <img
   src="ReadMe/warp.png"
