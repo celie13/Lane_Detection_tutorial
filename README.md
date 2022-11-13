@@ -24,12 +24,12 @@ In the case of our road, the main region is the bottom half of the image as it c
 ## Birds Eye View or Homomorphic Mapping
 Depending on your application it might be easier to visualize the road as if you were looking from above. <br>
 Given:
-$$s =\begin{bmatrix}x_{1}\\
+$${s =\begin{bmatrix}x_{1}\\
 y_{1}\\
 1 
 \end{bmatrix}, d = \begin{bmatrix}x_{2}\\
 y_{2}\\
 1 
-\end{bmatrix}$$
+\end{bmatrix}}$$
 Source $s$ and destination $d$ (the extra dimension is to be able to perform translation and rotation using Matrix Multiplication)
 
