@@ -83,7 +83,7 @@ In a Cartesian plane, lines are represented by the formula $y = ax + b$ with $a$
 <figure>
   <img
   src="ReadMe/image29.png"
-  alt="Cartesian Plane.">
+  alt="Cartesian Plane." width=250>
   <figcaption>Projection Mapping applied on ROI</figcaption>
 </figure>
 
@@ -91,8 +91,8 @@ With $\rho$ representing the distance of shortest line spanning from the origin 
 
 <figure>
 <p float="left">
-  <img src="ReadMe/line.png" width="500" />
-  <img src="ReadMe/houghspace.png" width="500" /> 
+  <img src="ReadMe/line.png" width="250" />
+  <img src="ReadMe/houghspace.png" width="250" /> 
 </p>
 <figurecaption> HoughSpace </figurecaption>
 </figure>
