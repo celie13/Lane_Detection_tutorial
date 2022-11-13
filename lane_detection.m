@@ -1,14 +1,23 @@
-function lane_detection(img_name,warp,~)
-%% open image file
+function lane_detection(img_name,warp,mask)
+%%% open image file
 road = imread(img_name); % "/" might not work on windows due to dir strims
 figure
 imshow(road)
 w = waitforbuttonpress;
 close 
-%% transform the image to gray scale
+%%% transform the image to gray scale
 grayRoad = im2double(rgb2gray(road));
 
-%% if user selects iwarp as an option then warp the image'
+%%% if the user selects imask then prompt for an image mask
+C = []
+if mask 
+    C = imask(grayRoad)
+    grayRoad = grayRoad*C
+end 
+imshow(grayRoad)
+w = waitforbuttonpress;
+close
+%%% if user selects iwarp as an option then warp the image'
 H = []
 roadBW = [];
 if warp == 1
@@ -21,13 +30,14 @@ end
 imshow(roadBW)
 w = waitforbuttonpress;
 close
-%% if the user selects imask then prompt for an image mask
 
-%% Find the lanes using the hough transform 
 
+%%% Find the lanes using the hough transform 
 
 end
 
+
+%%%%%%%%%%%%%%%%%%%%% Function finds and draw the lines %%%%%%%%%%%%%%%%%%%
 function houghPipeline(img)
     [H,theta,rho] = houghparam(img)
     %% Display the lines
@@ -52,7 +62,7 @@ function houghPipeline(img)
     % highlight the longest line segment
     plot(xy_long(:,1),xy_long(:,2),'LineWidth',2,'Color','red');
 end 
-%% returns hough param 
+%%%%%%%%%%%%%%%%%%%%% function returns hough param %%%%%%%%%%%%%%%%%%%%%%%%
 function[H,theta,rho] =  houghparam()
     [H,theta,rho] = hough(edge(roadBW,'sobel'));
     figure
@@ -72,12 +82,20 @@ function[H,theta,rho] =  houghparam()
     plot(x,y,'s','color','black');
 end 
 
-%% Returns the coordinates of the mask
+%%%%%%%%%%%%%%%%%%%% function returns mask roi %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function C = imask(img)
-
+    figure 
+    imshow(img) 
+    mask = drawpolygon;
+    C = createMask(mask);
+    close
 end 
 
-%% function returns H matrix for warping
+%%%%%%%%%%%%%%%%%%%% funcion returns crop on roi %%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%% function returns H matrix for warping %%%%%%%%%%%%%%%%
 function H = iwarp(img)
     figure
     imshow(img)
