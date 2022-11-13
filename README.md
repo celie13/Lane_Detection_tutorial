@@ -50,13 +50,10 @@ $$
 \begin{bmatrix}x_1\\
 y_1\\
 1
-\end{bmatrix}
- =
- A
-\begin{bmatrix}x_2\\
+\end{bmatrix} = A \begin{bmatrix}x_2\\
 y_2\\
 1
-\end{bmatrix}
+\end{bmatrix} 
 $$
 
 <figure>
