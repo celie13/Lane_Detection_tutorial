@@ -7,7 +7,7 @@ guideline for your future algorithm.
 ## Image Gray scale
 Most of the work involving lane detection doesn't need the colour information as there is a clear contrast between the line and the road.
 Therefore we can apply a gray scale transform: 
-$$G_xy = {(R_{xy}+G_{xy}+B_{xy}) \over 3}$$
+$$G_{xy} = {(R_{xy}+G_{xy}+B_{xy}) \over 3}$$
 Where (x,y) represents the pixel location.
 
 <figure>
@@ -18,7 +18,7 @@ Where (x,y) represents the pixel location.
 </figure>
 
 ## ROI cropping
-ROI (Region of Interest) is the area we are interesting in performing  part or all of our image processing pipeline. <br>
+ROI (Region of Interest) is the area we are interested in performing  part or all of our image processing pipeline. <br>
 In the case of our road, the main region is the bottom half of the image as it contains road information. We can extend this further on only look ahead. This will allow us to filter unwanted noise. 
 <figure>
   <img
@@ -26,7 +26,10 @@ In the case of our road, the main region is the bottom half of the image as it c
   alt="ROI of road.">
   <figcaption>ROI Mask</figcaption>
 </figure>
-Matlab  will return  
+
+Matlab  will return a mask C which is a matrix consisting of '0's and '1's of dimension equal to the image's. This binary mask indicates the pixel inclusion within the ROI. Doing an element wise matrix multiplication gives the result seen above. 
+
+## Conversion to a Black and white image
 
 ## Birds Eye View or Homomorphic Mapping
 
@@ -73,7 +76,7 @@ This implementation is a bit crude and  you can see it is not perfect. Mathwords
 ## Hough Transform
 
 In a Cartesian plane, lines are represented by the formula $y = ax + b$ with $a$ representing the slope and $b$ the $y-axis$ intersection. As such, lines can be defined as tuple containing both of these parameters: $(a,b)$. However, for vertical lines, in the form of $x = c$ with $c \in \mathbb{R}$, such notation is not applicable, as the slope would be infinite (undefined). <br>
-\par An alternative way of representing lines is defining them in terms of $\rho$ and $\theta$ as seen 
+An alternative way of representing lines is defining them in terms of $\rho$ and $\theta$ as seen 
 
 <figure>
   <img
@@ -82,7 +85,7 @@ In a Cartesian plane, lines are represented by the formula $y = ax + b$ with $a$
   <figcaption>Projection Mapping applied on ROI</figcaption>
 </figure>
 
-With $\rho$ representing the distance of shortest line spanning from the origin (blue) to desired line (red) and $\theta$ between the $a-axis$ and the aforementioned shortest line, the relationship between the pairs $(a,b)$ and $(\rho, \theta)$ can be inferred from Figure \ref{fig:cartesian} as $\frac{\rho}{b} = \sin(\theta) \Leftrightarrow \frac{1}{b} = \frac{\sin(\theta)}{\rho}$ and $\frac{\rho}{b}a = \cos(\theta) \Leftrightarrow \frac{a}{b} = \frac{\cos(\theta)}{\rho}$. Finally, the equation $y =ax-b$ can be rewritten as $\frac{y}{b}+\frac{a}{b} = 1$ resulting in, after substitution, $\rho = x\cos(\theta) + y\sin(\theta)$
+With $\rho$ representing the distance of shortest line spanning from the origin (blue) to desired line (red) and $\theta$ between the $a-axis$ and the aforementioned shortest line, the relationship between the pairs $(a,b)$ and $(\rho, \theta)$ can be inferred from the figure below as $\frac{\rho}{b} = \sin(\theta) \Leftrightarrow \frac{1}{b} = \frac{\sin(\theta)}{\rho}$ and $\frac{\rho}{b}a = \cos(\theta) \Leftrightarrow \frac{a}{b} = \frac{\cos(\theta)}{\rho}$. Finally, the equation $y =ax-b$ can be rewritten as $\frac{y}{b}+\frac{a}{b} = 1$ resulting in, after substitution, $\rho = x\cos(\theta) + y\sin(\theta)$
 
 <figure>
 <p float="left">
@@ -95,5 +98,12 @@ With $\rho$ representing the distance of shortest line spanning from the origin 
 On our original image the resulting output is the following:
 <figure>
   <img src="ReadMe/lines.png"  />
-<figurecaption> HoughSpace </figurecaption>
+<figurecaption> Lane detection </figurecaption>
 </figure>
+
+## Extra processing steps
+### Convert to BW
+Converting the image to black white is needed to be able to perform lane detection after image segmentation (you can see that black part of the image collides with the actual imageinformaion  )
+
+### Blur
+Blri

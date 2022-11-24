@@ -19,12 +19,14 @@ imshow(grayRoad)
 w = waitforbuttonpress;
 close
 %%% if user selects iwarp as an option then warp the image'
-H = []
+H = [];
+Hi = [];
 roadBW = grayRoad;
 if warp == 1
-    H = iwarp(grayRoad)
+    H = iwarp(grayRoad);
     [Iwarp,ref] = imwarp(grayRoad,H,'OutputView',imref2d(size(grayRoad)));
     roadBW = imbinarize(Iwarp,0.7);
+    Hi = invert(H)
 else
    roadBW = imbinarize(grayRoad,0.7);
 end
@@ -53,31 +55,36 @@ function houghPipeline(img,og_img)
     axis normal 
     hold on
     colormap(gca,hot)
-    P = houghpeaks(H,20,'threshold',ceil(0.3*max(H(:))));
+    P = houghpeaks(H,30,'threshold',ceil(0.3*max(H(:))));
     x = theta(P(:,2));
     y = rho(P(:,1));
     plot(x,y,'s','color','black');
     %%% Display the lines
-    lines = houghlines(img,theta,rho,P,'FillGap',30,'MinLength',5);
+    lines = houghlines(img,theta,rho,P,'FillGap',20,'MinLength',5);
     figure, imshow(og_img), hold on
     max_len = 0;
-    for k = 1:length(lines)
-       xy = [lines(k).point1; lines(k).point2];
-       plot(xy(:,1),xy(:,2),'LineWidth',2,'Color','green');
-    
-       % Plot beginnings and ends of lines
-       plot(xy(1,1),xy(1,2),'x','LineWidth',2,'Color','yellow');
-       plot(xy(2,1),xy(2,2),'x','LineWidth',2,'Color','red');
-    
-       % Determine the endpoints of the longest line segment
-       len = norm(lines(k).point1 - lines(k).point2);
-       if ( len > max_len)
-          max_len = len;
-          xy_long = xy;
-       end
+    if warp 
+
+
+    else
+        for k = 1:length(lines)
+           xy = [lines(k).point1; lines(k).point2];
+           plot(xy(:,1),xy(:,2),'LineWidth',2,'Color','green');
+        
+           % Plot beginnings and ends of lines
+           plot(xy(1,1),xy(1,2),'x','LineWidth',2,'Color','yellow');
+           plot(xy(2,1),xy(2,2),'x','LineWidth',2,'Color','red');
+        
+           % Determine the endpoints of the longest line segment
+           len = norm(lines(k).point1 - lines(k).point2);
+           if ( len > max_len)
+              max_len = len;
+              xy_long = xy;
+           end
+        end
+         % highlight the longest line segment
+        plot(xy_long(:,1),xy_long(:,2),'LineWidth',2,'Color','red');
     end
-    % highlight the longest line segment
-    plot(xy_long(:,1),xy_long(:,2),'LineWidth',2,'Color','red');
 end 
 
 %%%%%%%%%%%%%%%%%%%% function returns mask roi %%%%%%%%%%%%%%%%%%%%%%%%%%%%
