@@ -36,12 +36,12 @@ close
 
 
 %%% Find the lanes using the hough transform 
-houghPipeline(roadBW,road)
+houghPipeline(roadBW,road,warp,Hi)
 end
 
 
 %%%%%%%%%%%%%%%%%%%%% Function finds and draw the lines %%%%%%%%%%%%%%%%%%%
-function houghPipeline(img,og_img)
+function houghPipeline(img,og_img,warp,Hi)
 %%% find lines
     [H,theta,rho] = hough(edge(img,'canny'));
     figure
@@ -64,7 +64,24 @@ function houghPipeline(img,og_img)
     figure, imshow(og_img), hold on
     max_len = 0;
     if warp 
-
+  
+            for k = 1:length(lines)
+                
+           xy = [lines(k).point1; lines(k).point2];
+           [x,y] = transformPointsForward(Hi,xy(:,1),xy(:,2));
+           plot(x,y,'LineWidth',2,'Color','green');
+        
+           % Plot beginnings and ends of lines
+           %plot(xy(1,1),xy(1,2),'x','LineWidth',2,'Color','yellow');
+           %plot(xy(2,1),xy(2,2),'x','LineWidth',2,'Color','red');
+        
+           % Determine the endpoints of the longest line segment
+           len = norm(lines(k).point1 - lines(k).point2);
+           if ( len > max_len)
+              max_len = len;
+              xy_long = xy;
+           end
+            end
 
     else
         for k = 1:length(lines)
