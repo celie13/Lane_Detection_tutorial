@@ -106,4 +106,7 @@ On our original image the resulting output is the following:
 Converting the image to black white is needed to be able to perform lane detection after image segmentation (you can see that black part of the image collides with the actual imageinformaion  )
 
 ### Blur
-Blri
+Blurring might seem like a counter intuitive steps but it helps remove the noise (in our case small lines) that might get detected otherwise by our hough transform algorithm 
+
+### Closing remarks
+A lot of the work has already been done for you. You don't need to reivent the wheel but you might need to refine it or adapt it to your specific application. There are obviously other more "popular" avenue to explore expecially within the field of Machine Learning. However, you shouldn't discount simpler method especially when it comes to computational efficiency. 
